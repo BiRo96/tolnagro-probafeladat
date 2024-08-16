@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class EmailsController extends Controller
 {
-    function __construct(protected EmailTemplateRepositoryInterface $emailTemplateRepository)
+    public function __construct(protected EmailTemplateRepositoryInterface $emailTemplateRepository)
     {
     }
 
