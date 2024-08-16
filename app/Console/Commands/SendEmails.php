@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Console\Commands;
+set_time_limit(0);
 
 use App\Models\EmailTemplate;
 use Illuminate\Console\Command;
@@ -27,9 +28,10 @@ class SendEmails extends Command
      */
     public function handle()
     {
+        $sent_emails_in_row = 0;
         $email_templates = EmailTemplate::all();
         
-        $email_templates->each(function ($email_template) {
+        $email_templates->each(function ($email_template) use (&$sent_emails_in_row) {
             $recipients = [
                 'email1@example.com',
                 'email2@example.com',
@@ -42,6 +44,15 @@ class SendEmails extends Command
                     $message->to($recipient);
                     $message->subject($email_template->subject);
                 });
+
+                $sent_emails_in_row++;
+                if (($sent_emails_in_row % 3) == 0) {
+                    /**
+                     * 10mp várakozás minden 3. email után
+                     * (mailtrap.io ingyenes csomagja 550-es szerver hibát dob ha másodpercenként 5-nél több email-t próbálunk kézbesíteni)
+                     */
+                    sleep(10);
+                }
             }
         });
     }
