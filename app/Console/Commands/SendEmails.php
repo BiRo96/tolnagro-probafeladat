@@ -48,7 +48,7 @@ class SendEmails extends Command
             foreach ($recipients as $recipient) {
                 if (env("MAIL_ACTIVE") == "1") {
                     Mail::raw($email_template->body, function ($message) use ($email_template, $recipient) {
-                        $message->from('from@example.com');
+                        $message->from(env("MAIL_FROM_ADDRESS"));
                         $message->to($recipient);
                         $message->subject($email_template->subject);
                     });    
