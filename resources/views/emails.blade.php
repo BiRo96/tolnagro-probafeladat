@@ -15,6 +15,7 @@
             <tr class="bg-gray-300">
                 <th class="p-4">E-mail</th>
                 <th class="p-4">Kiküldések száma</th>
+                <th class="p-4">Műveletek</th>
             </tr>
             </thead>
             <tbody>
@@ -22,6 +23,13 @@
                     <tr class="even:bg-gray-100">
                         <td class="p-4 text-center border-r">{{$item->subject}}</td>
                         <td class="p-4 text-right">{{$item->sentEmails->count()}}</td>
+                        <td class="p-4 text-right text-red-500">
+                            <form action={{ route('emailsDestroy', $item->id) }} method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Törlés</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

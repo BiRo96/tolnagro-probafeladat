@@ -39,7 +39,7 @@ class EmailsController extends Controller
         ]);
 
         EmailTemplate::create($request->all());
-        redirect(route("emailsIndex"));
+        return redirect()->route("emailsIndex");
     }
 
     /**
@@ -71,6 +71,7 @@ class EmailsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        EmailTemplate::destroy($id);
+        return redirect()->route("emailsIndex");
     }
 }
