@@ -2,26 +2,28 @@
 
 namespace Database\Seeders;
 
-use App\Models\EmailTemplate;
-use App\Models\SentEmail;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Repositories\EmailTemplateRepository;
+use App\Repositories\SentEmailRepository;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
 class EmailSeeder extends Seeder
 {
+
+    public function __construct(protected EmailTemplateRepository $emailTemplateRepository, protected SentEmailRepository $sentEmailRepository){}
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        SentEmail::truncate();
-        EmailTemplate::truncate();
+        $this->sentEmailRepository->truncate();
+        $this->emailTemplateRepository->truncate();
         Schema::enableForeignKeyConstraints();
         
         for ($i=0; $i < 10; $i++) { 
-            EmailTemplate::create([
+            $this->emailTemplateRepository->create([
                 'subject' => 'Email '.($i+1),
                 'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, voluptatem fugit voluptates ullam illum omnis reprehenderit laboriosam inventore. Nostrum reiciendis ratione soluta ullam laborum! Veritatis mollitia porro quasi quos qui.',
             ]);
@@ -35,7 +37,7 @@ class EmailSeeder extends Seeder
         ];
 
         for ($i=0; $i < 10; $i++) { 
-            SentEmail::create([
+            $this->sentEmailRepository->create([
                 'email_address' => $email_addresses[rand(0, 3)],
                 'email_template_id' => rand(1, 10),
             ]);

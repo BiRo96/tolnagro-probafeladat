@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\EmailTemplateRepository;
+use App\Repositories\SentEmailRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(EmailTemplateRepository::class, function ($app) {
+            return new EmailTemplateRepository();
+        });
+        $this->app->bind(SentEmailRepository::class, function ($app) {
+            return new SentEmailRepository();
+        });
     }
 
     /**

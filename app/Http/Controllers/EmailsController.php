@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmailTemplate;
-use App\Models\SentEmail;
+use App\Repositories\EmailTemplateRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 
 class EmailsController extends Controller
 {
+    function __construct(protected EmailTemplateRepository $emailTemplateRepository)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {        
-        $email_templates = EmailTemplate::with('sentEmails')->get();
+        $email_templates = $this->emailTemplateRepository->getAllWithSentEmails();
 
         $title = 'Email sablon törlése!';
         $text = "Biztosan törölni szeretné?";
@@ -42,32 +44,8 @@ class EmailsController extends Controller
             'body' => 'required|min:10',
         ]);
 
-        EmailTemplate::create($request->all());
+        $this->emailTemplateRepository->create($request->all());
         return redirect()->route("emailsIndex");
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**
@@ -75,7 +53,7 @@ class EmailsController extends Controller
      */
     public function destroy(string $id)
     {
-        EmailTemplate::destroy($id);
+        $this->emailTemplateRepository->delete($id);
         return redirect()->route("emailsIndex");
     }
 }
