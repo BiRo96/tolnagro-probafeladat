@@ -24,11 +24,8 @@
                         <td class="p-4 text-center border-r">{{$item->subject}}</td>
                         <td class="p-4 text-right">{{$item->sentEmails->count()}}</td>
                         <td class="p-4 text-right text-red-500">
-                            <form action={{ route('emailsDestroy', $item->id) }} method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Törlés</button>
-                            </form>
+                            <a href="{{ route('emailsDestroy', $item->id) }}" class="btn btn-danger" data-confirm-delete="true">@method('DELETE') Törlés</a>
+
                         </td>
                     </tr>
                 @endforeach

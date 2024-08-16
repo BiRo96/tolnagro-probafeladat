@@ -17,6 +17,10 @@ class EmailsController extends Controller
     {        
         $email_templates = EmailTemplate::with('sentEmails')->get();
 
+        $title = 'Email sablon törlése!';
+        $text = "Biztosan törölni szeretné?";
+        confirmDelete($title, $text);
+
         return view('emails', ["email_templates" => $email_templates]);
     }
 
