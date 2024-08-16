@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 set_time_limit(0);
 
 use App\Models\EmailTemplate;
+use App\Repositories\Interfaces\EmailTemplateRepositoryInterface;
+use App\Repositories\Interfaces\SentEmailRepositoryInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -23,13 +25,18 @@ class SendEmails extends Command
      */
     protected $description = 'Elküldi a mentett email sablonokat email-ben 3 tetszőleges email címre';
 
+    public function __construct(protected EmailTemplateRepositoryInterface $emailTemplateRepository, protected SentEmailRepositoryInterface $sentEmailRepository)
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      */
     public function handle()
     {
         $sent_emails_in_row = 0;
-        $email_templates = EmailTemplate::all();
+        $email_templates = $this->emailTemplateRepository->getAll();
         
         $email_templates->each(function ($email_template) use (&$sent_emails_in_row) {
             $recipients = [
@@ -44,6 +51,11 @@ class SendEmails extends Command
                     $message->to($recipient);
                     $message->subject($email_template->subject);
                 });
+
+                $this->sentEmailRepository->create([
+                    'email_address' => $recipient,
+                    'email_template_id' => $email_template->id,
+                ]);
 
                 $sent_emails_in_row++;
                 if (($sent_emails_in_row % 3) == 0) {

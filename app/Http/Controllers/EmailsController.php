@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\EmailTemplateRepository;
+use App\Repositories\Interfaces\EmailTemplateRepositoryInterface;
 use Illuminate\Http\Request;
 
 
 class EmailsController extends Controller
 {
-    function __construct(protected EmailTemplateRepository $emailTemplateRepository)
+    function __construct(protected EmailTemplateRepositoryInterface $emailTemplateRepository)
     {
     }
 

@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Repositories\EmailTemplateRepository;
-use App\Repositories\SentEmailRepository;
+use App\Repositories\Interfaces\EmailTemplateRepositoryInterface;
+use App\Repositories\Interfaces\SentEmailRepositoryInterface;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
 class EmailSeeder extends Seeder
 {
 
-    public function __construct(protected EmailTemplateRepository $emailTemplateRepository, protected SentEmailRepository $sentEmailRepository){}
+    public function __construct(protected EmailTemplateRepositoryInterface $emailTemplateRepository, protected SentEmailRepositoryInterface $sentEmailRepository){}
 
     /**
      * Run the database seeds.
