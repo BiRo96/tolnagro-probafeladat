@@ -24,6 +24,7 @@
                     name="subject"
                     type="text"
                     placeholder="Tárgy"
+                    value="{{ old('subject') }}"
                 >
             </div>
 
@@ -41,7 +42,7 @@
                     id="body"
                     name="body"
                     placeholder="Tartalom"
-                ></textarea>
+                >{{ old('body') }}</textarea>
             </div>
 
             <div class="flex items-center justify-between">
