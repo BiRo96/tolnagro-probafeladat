@@ -7,7 +7,7 @@
 @section('content')
     <div class="m-10">
         <a href={{ route('emailsCreate') }}>
-            <button class="mb-4 bg-transparent hover:bg-blue-400 text-blue-600 font-semibold hover:text-white py-2 px-4 border border-blue-400 hover:border-transparent rounded">Új Email létrehozása</button>
+            <button class="mb-4 bg-transparent hover:bg-blue-400 text-blue-600 font-semibold hover:text-white py-2 px-4 border border-blue-400 hover:border-transparent rounded">Új E-mail létrehozása</button>
         </a>
 
         <table class="border border-gray-300 w-full">

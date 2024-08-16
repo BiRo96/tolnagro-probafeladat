@@ -9,41 +9,33 @@
         <form action={{ route('emailsStore') }} method="POST">
             @csrf
 
+            @foreach ($form_fields as $field_prop)
+                
             <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2" for="subject">
-                    Tárgy
+                <label class="block mb-2 font-bold text-gray-700" for="{{$field_prop['field']}}">
+                    {{$field_prop['label']}}
                 </label>
 
-                @error('subject')
-                    @include('template.form_error')
+                @error($field_prop['field'])
+                    @include('components.forms.error')
                 @enderror
 
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="subject"
-                    name="subject"
-                    type="text"
-                    placeholder="Tárgy"
-                    value="{{ old('subject') }}"
-                >
+                @switch($field_prop['type'])
+                
+                    @case("text")
+                        @include('components.forms.input_text')
+                        @break
+
+                    @case("textarea")
+                        @include('components.forms.input_textarea')
+                        @break
+
+                    @default
+                        
+                @endswitch
+                
             </div>
-
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2" for="body">
-                    Tartalom
-                </label>
-
-                @error('body')
-                    @include('template.form_error')
-                @enderror
-
-                <textarea
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="body"
-                    name="body"
-                    placeholder="Tartalom"
-                >{{ old('body') }}</textarea>
-            </div>
+            @endforeach
 
             <div class="flex items-center justify-between">
                 <button

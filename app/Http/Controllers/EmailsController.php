@@ -31,7 +31,19 @@ class EmailsController extends Controller
      */
     public function create()
     {
-        return view('emails_create');
+        $form_fields = [
+            [
+                'field' => 'subject', 
+                'label' => 'Tárgy', 
+                'type' => 'text'
+            ], [
+                'field' => 'body', 
+                'label' => 'Tartalom', 
+                'type' => 'textarea'
+            ]
+        ];
+
+        return view('emails_create', ["form_fields" => $form_fields]);
     }
 
     /**
