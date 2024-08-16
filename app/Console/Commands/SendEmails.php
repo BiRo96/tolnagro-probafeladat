@@ -46,11 +46,13 @@ class SendEmails extends Command
             ];
 
             foreach ($recipients as $recipient) {
-                Mail::raw($email_template->body, function ($message) use ($email_template, $recipient) {
-                    $message->from('from@example.com');
-                    $message->to($recipient);
-                    $message->subject($email_template->subject);
-                });
+                if (env("MAIL_ACTIVE") == "1") {
+                    Mail::raw($email_template->body, function ($message) use ($email_template, $recipient) {
+                        $message->from('from@example.com');
+                        $message->to($recipient);
+                        $message->subject($email_template->subject);
+                    });    
+                }
 
                 $this->sentEmailRepository->create([
                     'email_address' => $recipient,
@@ -58,7 +60,7 @@ class SendEmails extends Command
                 ]);
 
                 $sent_emails_in_row++;
-                if (($sent_emails_in_row % 3) == 0) {
+                if (($sent_emails_in_row % 3) == 0 && (env("MAIL_ACTIVE") == "1")) {
                     /**
                      * 10mp várakozás minden 3. email után
                      * (mailtrap.io ingyenes csomagja 550-es szerver hibát dob ha másodpercenként 5-nél több email-t próbálunk kézbesíteni)

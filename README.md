@@ -29,9 +29,15 @@ sudo chmod 0777 ./ -R
 ```
 
 Majd ezt követően a .env fájlban meg kell adni a mailtrap.io smtp felhasználó nevünket és jelszavunkat.  
-*(Mailtrap-et használtam annak érdekébe, hogy véletlenül se küldjek ki élesbe sehova semmilyen e-mail-t.)*  
+Illetve a MAIL_ACTIVE változót 1-re kell állítani, ha nem 1, akkor az app kihagyja az e-mail-ek kiküldését, és csak bejegyzi, mintha kiküldte volna.  
+
+***(Mailtrap-et használtam annak érdekébe, hogy véletlenül se küldjek ki élesbe sehova semmilyen e-mail-t.)***  
+- Ennek az ingyenes csomagja pár másodpercen belül csak 5 e-mailt hajlandó befogadni, ezért 3 mail után 10 másodpercet várok.  
+  - Ez 3 email címmel és mondjuk 3 e-mail sablonnal számolva legalább fél perc, mire az ütemezett folyamat lefut egyszer.  
+  - Ennek fejében tettem inaktiválhatóvá a tényleges kiküldést
 
 Ezeket a változókat keressük:
+- MAIL_ACTIVE
 - MAIL_USERNAME
 - MAIL_PASSWORD
   
