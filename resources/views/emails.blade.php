@@ -22,7 +22,7 @@
                 @foreach ($email_templates as $item)
                     <tr class="even:bg-gray-100">
                         <td class="p-4 text-center border-r">{{$item->subject}}</td>
-                        <td class="p-4 text-right">{{$item->sentEmails->count()}}</td>
+                        <td class="p-4 text-right border-r">{{$item->sentEmails->count()}}</td>
                         <td class="p-4 text-right text-red-500">
                             <a href="{{ route('emailsDestroy', $item->id) }}" class="btn btn-danger" data-confirm-delete="true">@method('DELETE') Törlés</a>
 
