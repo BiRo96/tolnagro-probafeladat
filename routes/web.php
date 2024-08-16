@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/", function () {
+    return redirect()->route("emailsIndex");
 });
+
+Route::resource('/emails', 'App\Http\Controllers\EmailsController')->only(['index', 'create', 'store', 'destroy'])->names(['index' => 'emailsIndex', 'create' => 'emailsCreate', 'store' => 'emailsStore', 'destroy' => 'emailsDestroy']);

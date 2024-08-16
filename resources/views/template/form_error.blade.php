@@ -1,0 +1,1 @@
+<div class="text-red-700 text-sm font-bold mb-2 ">{{ $message }}</div>
