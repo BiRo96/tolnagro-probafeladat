@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EmailTemplate extends Model
 {
@@ -13,9 +13,9 @@ class EmailTemplate extends Model
     protected $guarded = ['id'];
 
     
-    public function sentEmails(): BelongsToMany
+    public function sentEmails(): HasMany
     {
-        return $this->belongsToMany(SentEmail::class, 'sent_emails', 'email_template_id', 'id');
+        return $this->hasMany(SentEmail::class);
     }
     
 }

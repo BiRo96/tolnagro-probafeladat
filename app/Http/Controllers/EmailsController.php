@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailTemplate;
 use App\Models\SentEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +14,10 @@ class EmailsController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $sent_emails = SentEmail::select('email_template_id', DB::raw('COUNT(*) as count'))
-            ->groupBy('email_template_id')
-            ->get();
-        return view('emails', ["sent_emails" => $sent_emails]);
+    {        
+        $email_templates = EmailTemplate::with('sentEmails')->get();
+
+        return view('emails', ["email_templates" => $email_templates]);
     }
 
     /**
@@ -25,7 +25,7 @@ class EmailsController extends Controller
      */
     public function create()
     {
-        //
+        return view('emails_create');
     }
 
     /**
@@ -33,7 +33,13 @@ class EmailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'subject' => 'required|min:3',
+            'body' => 'required|min:10',
+        ]);
+
+        EmailTemplate::create($request->all());
+        redirect(route("emailsIndex"));
     }
 
     /**

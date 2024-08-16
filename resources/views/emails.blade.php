@@ -1,29 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>E-mail statisztikák</title>
-    @vite('resources/css/app.css')
-</head>
-<body>
-    <h1 class="text-3xl m-10 font-bold">E-mail statisztikák</h1>
-    <table class="m-10 border border-gray-300">
-        <thead>
-        <tr class="bg-gray-300">
-            <th class="p-4">E-mail</th>
-            <th class="p-4">Kiküldések száma</th>
-        </tr>
-        </thead>
-        <tbody>
-            @foreach ($sent_emails as $item)
-                <tr class="even:bg-gray-100">
-                    <td class="p-4 text-center">{{$item->emailTemplate->subject}}</td>
-                    <td class="p-4 text-right">{{$item['count']}}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    </body>
-</html>
+@extends('template.app')
+
+@section('title')
+    E-mail kiküldési statisztikák
+@overwrite
+
+@section('content')
+    <div class="m-10">
+        <a href={{ route('emailsCreate') }}>
+            <button class="mb-4 bg-transparent hover:bg-blue-400 text-blue-600 font-semibold hover:text-white py-2 px-4 border border-blue-400 hover:border-transparent rounded">Új Email létrehozása</button>
+        </a>
+
+        <table class="border border-gray-300 w-full">
+            <thead>
+            <tr class="bg-gray-300">
+                <th class="p-4">E-mail</th>
+                <th class="p-4">Kiküldések száma</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach ($email_templates as $item)
+                    <tr class="even:bg-gray-100">
+                        <td class="p-4 text-center border-r">{{$item->subject}}</td>
+                        <td class="p-4 text-right">{{$item->sentEmails->count()}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endsection

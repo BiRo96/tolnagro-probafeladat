@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\EmailsController@index');
+Route::resource('/', 'App\Http\Controllers\EmailsController')->only(['index', 'create', 'store', 'destroy'])->names(['index' => 'emailsIndex', 'create' => 'emailsCreate', 'store' => 'emailsStore']);
